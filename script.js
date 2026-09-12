@@ -328,7 +328,7 @@ const projects = [
     {
         number: "01",
         title: "Online Payment System",
-        description: "A deep learning based Bangla speech-to-text conversion system developed to contribute to Bangla voice recognition and natural language processing.",
+        description: "An online payment system using HTML, CSS, and JavaScript, focuses on providing a smooth payment experience with interactive forms, payment method selection, input validation, transaction history, and responsive design for different screen sizes.",
         tech: "HTML, CSS, JS",
         image: "digitalbanking.png",
         alt: "Online payment system",
