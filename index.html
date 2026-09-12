@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Saikat Sudipta Shuva | Portfolio</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- EmailJS -->
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+
+<!-- Stylish Success Popup -->
+<div class="success-popup" id="success-popup">
+    <div class="popup-box">
+        <div class="popup-icon">
+            <i class="fa-solid fa-check"></i>
+        </div>
+
+        <h3>Message Sent!</h3>
+        <p>Thank you for contacting me. Your message has been sent successfully.</p>
+
+        <button id="popup-close" class="popup-btn">OK</button>
+    </div>
+</div>
+
+
+
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+
+        <a href="#home">
+            <img src="logo.png" alt="" class="logo">
+        </a>
+
+        <nav id="navbar">
+
+            <a href="#home" class="active">Home</a>
+            <a href="#services">Services</a>
+            <a href="#resume">Resume</a>
+            <a href="#projects">Portfolio</a>
+            <a href="#contact">Contact</a>
+
+        </nav>
+
+        <div class="header-buttons">
+
+            <button id="theme-btn" aria-label="Change theme">
+                <i class="fas fa-moon"></i>
+            </button>
+
+            <button id="menu-btn" aria-label="Open menu">
+                <i class="fas fa-bars"></i>
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= HOME ================= -->
+
+    <section class="home section" id="home">
+
+        <div class="home-content">
+
+            <p class="small-title">
+                Hello, I'm
+            </p>
+
+            <h1>
+                Saikat Sudipta Shuva
+            </h1>
+
+            <h2>
+                I'm a
+                <span class="typing">CSE Graduate</span>
+            </h2>
+
+            <p class="home-description">
+                Computer Science and Engineering graduate from East West
+                University, currently pursuing an M.Sc. in Computer Science
+                and Engineering at Khulna University.
+            </p>
+
+            <div class="home-buttons">
+
+                <a href="cv.pdf" view class="btn">
+                    Download CV
+                </a>
+
+            </div>
+
+            <div class="social-icons">
+
+                <a href="https://github.com/saikat-sudipta-shuva" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+
+                <a href="https://www.linkedin.com/in/saikat-sudipta-shuva/" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+
+                <a href="https://www.facebook.com/saikatsudiptashuva" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                
+
+            </div>
+
+        </div>
+
+
+        <div class="home-image" id="profile-image-container">
+
+            <div class="image-border"></div>
+
+            <div class="profile-card">
+                <div class="profile-front">
+                    <img src="sakat1.png" alt="Profile Logo">
+                </div>
+
+                <div class="profile-back">
+                    <img src="sakat1.png" alt="Profile Logo">
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= SERVICES ================= -->
+
+    <section class="services section" id="services">
+
+        <div class="section-heading">
+
+            <h2>
+                My <span>Services</span>
+            </h2>
+
+        </div>
+
+
+        <div class="services-grid">
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+
+                <div class="service-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+
+                <h3>
+                    Software Development
+                </h3>
+
+                <p>
+                    Developing software solutions using structured,
+                    object-oriented and modern programming techniques.
+                </p>
+
+            </div>
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+
+                <div class="service-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+
+                <h3>
+                    Web Development
+                </h3>
+
+                <p>
+                    Building responsive websites and web applications
+                    using modern front-end and back-end technologies.
+                </p>
+
+            </div>
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+
+                <div class="service-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+
+                <h3>
+                    Database Management
+                </h3>
+
+                <p>
+                    Designing and managing databases using MySQL,
+                    PL/SQL and MongoDB.
+                </p>
+
+            </div>
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    <i class="fas fa-vial"></i>
+                </div>
+
+                <div class="service-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+
+                <h3>
+                    Software Testing
+                </h3>
+
+                <p>
+                    Interested in software quality assurance,
+                    testing and reliable software development.
+                </p>
+
+            </div>
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+
+                <div class="service-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+
+                <h3>
+                    Machine Learning
+                </h3>
+
+                <p>
+                    Interested in machine learning, deep learning
+                    and natural language processing.
+                </p>
+
+            </div>
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    <i class="fas fa-sitemap"></i>
+                </div>
+
+                <div class="service-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+
+                <h3>
+                    API Development
+                </h3>
+
+                <p>
+                    Developing and working with REST APIs for
+                    web-based software applications.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= RESUME ================= -->
+
+    <section class="resume section" id="resume">
+
+        <div class="resume-left">
+
+            <h2>
+                Why Hire <span>Me?</span>
+            </h2>
+
+            <p>
+                I am a motivated Computer Science and Engineering graduate
+                with experience in programming, web development, databases,
+                machine learning and academic projects.
+            </p>
+
+
+            <div class="resume-tabs">
+
+                <button class="tab-btn active"
+                    data-tab="experience">
+                    Achievement
+                </button>
+
+                <button class="tab-btn"
+                    data-tab="education">
+                    Education
+                </button>
+
+                <button class="tab-btn"
+                    data-tab="skills">
+                    Skills
+                </button>
+
+                <button class="tab-btn"
+                    data-tab="about">
+                    About Me
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="resume-right">
+
+<!-- EXPERIENCE -->
+
+<div class="tab-content active" id="experience">
+
+    <h2>
+        My <span>Achievement</span>
+    </h2>
+
+    <p class="resume-intro">
+        A collection of milestones that reflect my dedication, growth, and continuous learning. <br><br>
+    </p>
+
+    <div class="experience-scroll">
+
+        <div class="experience-grid">
+
+            <!-- Achievement 1 -->
+            <article
+                class="experience-card"
+                data-image="Certificate.jpg"
+            >
+
+                <span>
+                    2026
+                </span>
+
+                <h3>
+                    LinkedIn & CV Design Workshop
+                </h3>
+
+                <p class="experience-place">
+                    <i class="fas fa-circle"></i>
+                    University Canvas of Bangladesh
+                </p>
+
+                <p>
+                    Gained practical knowledge of professional CV writing
+                    and LinkedIn profile development.
+                </p>
+
+            </article>
+
+
+            <!-- Achievement 2 -->
+            <article
+                class="experience-card"
+                data-image="medhalalon.png"
+            >
+
+                <span>
+                    2023
+                </span>
+
+                <h3>
+                    Medha Lalon Scholarship
+                </h3>
+
+                <p class="experience-place">
+                    <i class="fas fa-circle"></i>
+                    East West University
+                </p>
+
+                <p>
+                    Received the Medha Lalon Scholarship from
+                    East West University.
+                </p>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+            <!-- EDUCATION -->
+
+            <div class="tab-content" id="education">
+
+                <h2>
+                    My <span>Education</span>
+                </h2>
+
+                <p class="resume-intro">
+                    My academic background and educational journey.
+                </p>
+
+
+                <div class="education-scroll">
+
+                    <div class="education-grid">
+
+                        <article class="education-card">
+
+                            <span>
+                                2025 - Currently Studying
+                            </span>
+
+                            <h3>
+                                M.Sc. in Computer Science and Engineering
+                            </h3>
+
+                            <p class="education-place">
+                                <i class="fas fa-circle"></i>
+                                Khulna University
+                            </p>
+
+                            <p>
+                                Currently pursuing a Master's degree in
+                                Computer Science and Engineering.
+                            </p>
+
+                        </article>
+
+
+                        <article class="education-card">
+
+                            <span>
+                                Passing Year: 2024
+                            </span>
+
+                            <h3>
+                                B.Sc. in Computer Science and Engineering
+                            </h3>
+
+                            <p class="education-place">
+                                <i class="fas fa-circle"></i>
+                                East West University
+                            </p>
+
+                            <p>
+                                CSE Department
+                            </p>
+
+                        </article>
+
+
+                        <article class="education-card">
+
+                            <span>
+                                Passing Year: 2019
+                            </span>
+
+                            <h3>
+                                Higher Secondary School Certificate
+                            </h3>
+
+                            <p class="education-place">
+                                <i class="fas fa-circle"></i>
+                                Kapilmuni College
+                            </p>
+
+                            <p>
+                                Science group
+                            </p>
+
+                        </article>
+
+
+                        <article class="education-card">
+
+                            <span>
+                                Passing Year: 2016
+                            </span>
+
+                            <h3>
+                                Secondary School Certificate
+                            </h3>
+
+                            <p class="education-place">
+                                <i class="fas fa-circle"></i>
+                                Haridhali Union Secondary School
+                            </p>
+
+                            <p>
+                                Science Group
+                            </p>
+
+                        </article>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SKILLS -->
+
+            <div class="tab-content" id="skills">
+
+                <h2>
+                    My <span>Skills</span>
+                </h2>
+
+                <p class="resume-intro">
+                    Technologies and technical skills from my academic
+                    and project experience.
+                </p>
+
+
+                <div class="skills-scroll">
+
+                    <div class="skills-grid">
+
+                        <div class="skill-card">
+                            <i class="fas fa-code"></i>
+                            <h3>C</h3>
+                            <p>Structured Programming</p>
+                        </div>
+
+                        <div class="skill-card">
+                            <i class="fas fa-code"></i>
+                            <h3>C++</h3>
+                            <p>Structured Programming</p>
+                        </div>
+
+                        <div class="skill-card">
+                            <i class="fab fa-java"></i>
+                            <h3>Java</h3>
+                            <p>Object Oriented Programming</p>
+                        </div>
+
+                        <div class="skill-card">
+                            <i class="fab fa-python"></i>
+                            <h3>Python</h3>
+                            <p>Object Oriented Programming</p>
+                        </div>
+
+                        <div class="skill-card">
+                            <i class="fab fa-html5"></i>
+                            <h3>HTML</h3>
+                            <p>Front-end</p>
+                        </div>
+
+                        <div class="skill-card">
+                            <i class="fab fa-css3-alt"></i>
+                            <h3>CSS</h3>
+                            <p>Front-end</p>
+                        </div>
+
+                        <div class="skill-card">
+                            <i class="fab fa-bootstrap"></i>
+                            <h3>Bootstrap</h3>
+                            <p>Front-end</p>
+                        </div>
+
+                        <div class="skill-card">
+                            <i class="fas fa-wind"></i>
+                            <h3>Tailwind CSS</h3>
+                            <p>Front-end</p>
+                        </div>
+
+                        <div class="skill-card">
+                            <i class="fab fa-js"></i>
+                            <h3>JavaScript</h3>
+                            <p>Front-end</p>
+                        </div>
+
+                        <div class="skill-card">
+                            <i class="fab fa-react"></i>
+                            <h3>React.js</h3>
+                            <p>Front-end</p>
+                        </div>
+
+                        <div class="skill-card">
+                            <i class="fab fa-php"></i>
+                            <h3>PHP</h3>
+                            <p>Back-end</p>
+                        </div>
+
+
+                        <div class="skill-card">
+                            <i class="fas fa-database"></i>
+                            <h3>MySQL</h3>
+                            <p>Database</p>
+                        </div>
+
+                        <div class="skill-card">
+                            <i class="fas fa-database"></i>
+                            <h3>PL/SQL</h3>
+                            <p>Database</p>
+                        </div>
+
+                        <div class="skill-card">
+                            <i class="fas fa-leaf"></i>
+                            <h3>MongoDB</h3>
+                            <p>Database</p>
+                        </div>
+
+                        <div class="skill-card">
+                            <i class="fab fa-git-alt"></i>
+                            <h3>Git & GitHub</h3>
+                            <p>Version Control</p>
+                        </div>
+
+                        <div class="skill-card">
+                            <i class="fas fa-vial"></i>
+                            <h3>Software Testing</h3>
+                            <p>Quality Assurance</p>
+                        </div>
+
+                        <div class="skill-card">
+                            <i class="fas fa-brain"></i>
+                            <h3>Machine Learning</h3>
+                            <p>Interest Area</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ABOUT -->
+
+            <div class="tab-content" id="about">
+
+                <h2>
+                    About <span>Me</span>
+                </h2>
+
+
+
+
+                <div class="about-content">
+
+                    <p>
+                        I am a Computer Science and Engineering graduate
+                        from East West University and currently pursuing
+                        an M.Sc. in Computer Science and Engineering at
+                        Khulna University.
+                    </p>
+
+                    <p>
+                        I have hands-on experience with various programming
+                        languages, web technologies, databases and academic
+                        software projects. I am highly motivated to begin
+                        my professional career and continue learning and
+                        growing as a software professional.
+                    </p>
+
+
+                    <div class="about-grid">
+
+                        <div>
+                            <span>Name</span>
+                            <strong>Saikat Sudipta Shuva</strong>
+                        </div>
+
+                        <div>
+                            <span>Degree</span>
+                            <strong>B.Sc. in Computer Science & Engineering</strong>
+                        </div>
+
+                        <div>
+                            <span>E-mail</span>
+                            <strong>saikatsudiptashuva@gmail.com</strong>
+                        </div>
+
+                        <div>
+                            <span>Phone</span>
+                            <strong>+8801779280391</strong>
+                        </div>
+
+                        <div>
+                            <span>Nationality</span>
+                            <strong>Bangladeshi</strong>
+                        </div>
+
+                        <div>
+                            <span>Language</span>
+                            <strong>Bangla, English</strong>
+                        </div>
+
+                         <div>
+                            <span>Adderss</span>
+                            <strong>Paikgacha, Khulna, Bangladesh</strong>
+                        </div>
+
+                         <div>
+                            <span>Blood Group</span>
+                            <strong>O+</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= PROJECTS ================= -->
+
+    <section class="projects section" id="projects">
+
+        <div class="projects-heading">
+
+            <h2>
+                Latest <span>Project</span>
+            </h2>
+
+        </div>
+
+
+        <div class="featured-project">
+
+            <div class="project-details">
+
+                <span id="project-number"
+                    class="project-number">
+                    01
+                </span>
+
+                <h3 id="project-title">
+                    Online Payment System
+                </h3>
+
+                <p id="project-description">
+                    An online payment system using HTML, CSS, and JavaScript, focuses 
+                    on providing a smooth payment experience with interactive forms, payment method selection, input validation, transaction history, and responsive design for different screen sizes. 
+                </p>
+
+                <p id="project-tech"
+                    class="project-tech">
+                    HTML, CSS, JS
+                </p>
+
+                <div class="project-divider"></div>
+
+<div class="project-links">
+
+    <a href="#"
+       id="project-live"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="Live Project">
+
+        <i class="fas fa-arrow-up-right-from-square"></i>
+
+    </a>
+
+    <a href="#"
+       id="project-github"
+       target="_blank"
+       rel="noopener noreferrer"
+       aria-label="GitHub">
+
+        <i class="fab fa-github"></i>
+
+    </a>
+
+</div>
+            </div>
+
+
+            <div class="project-visual">
+
+                <div class="project-image-frame">
+
+                    <img id="project-image"
+                        src="digitalbanking.png"
+                        alt="Online Payment System">
+
+                </div>
+
+
+                <div class="project-controls">
+
+                    <button id="project-prev"
+                        aria-label="Previous project">
+
+                        <i class="fas fa-chevron-left"></i>
+
+                    </button>
+
+                    <button id="project-next"
+                        aria-label="Next project">
+
+                        <i class="fas fa-chevron-right"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= CONTACT ================= -->
+
+    <section class="contact section" id="contact">
+
+        <div class="section-heading">
+
+            <h2>
+                Contact <span>Me</span>
+            </h2>
+
+            <p>
+                Feel free to contact me for opportunities,
+                collaborations or project discussions.
+            </p>
+
+        </div>
+
+
+        <div class="contact-container">
+
+            <!-- CONTACT INFO -->
+
+            <div class="contact-info">
+
+                <h3>
+                    Let's Work Together
+                </h3>
+
+                <p>
+                    I am interested in professional opportunities,
+                    software development, research and collaborative
+                    projects.
+                </p>
+
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+
+                    <div>
+                        <span>Email</span>
+                        <p>
+                            saikatsudiptashuva@gmail.com
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <a href="tel:+8801779280391" class="contact-item">
+
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+
+                    <div>
+                        <span>Phone</span>
+                        <p>
+                            +8801779280391
+                        </p>
+                    </div>
+
+                </a>
+
+
+                <a href="https://www.google.com/maps/search/?api=1&query=Khulna%2C%20Bangladesh"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="contact-item">
+
+                    <div class="contact-icon">
+                        <i class="fas fa-location-dot"></i>
+                    </div>
+
+                    <div>
+                        <span>Location</span>
+                        <p>Paikgacha, Khulna, Bangladesh</p>
+                    </div>
+
+                </a>
+
+
+                <a href="https://www.linkedin.com/in/saikat-sudipta-shuva/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="contact-item">
+
+                    <div class="contact-icon">
+                        <i class="fab fa-linkedin"></i>
+                    </div>
+
+                    <div>
+                        <span>LinkedIn</span>
+                        <p>saikat-sudipta-shuva</p>
+                    </div>
+
+                </a>
+
+            </div>
+
+
+            <!-- CONTACT FORM -->
+
+            <div class="contact-form-wrapper">
+
+                <form class="contact-form" id="contact-form">
+                   
+
+                    <div class="form-row">
+
+                        <div class="input-box">
+
+                            <input type="text"
+                                name="name"
+                                placeholder="Your Name"
+                                required>
+
+                        </div>
+
+                        <div class="input-box">
+
+                            <input type="email"
+                                name="email"
+                                placeholder="Your Email"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="input-box">
+
+                        <input type="text"
+                            name="subject"
+                            placeholder="Subject"
+                            required>
+
+                    </div>
+
+
+                    <div class="input-box">
+
+                        <textarea name="message"
+                            placeholder="Your Message"
+                            rows="7"
+                            required></textarea>
+
+                    </div>
+
+
+                    <button type="submit"
+                        class="btn"
+                        id="submit-btn">
+
+                        Send Message
+
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <p>
+            © 2026
+            <span>Saikat Sudipta Shuva</span>.
+            All Rights Reserved.
+        </p>
+
+        <a href="#home"
+            aria-label="Back to top">
+
+            <i class="fas fa-arrow-up"></i>
+
+        </a>
+
+    </footer>
+
+
+    <!-- JS -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
