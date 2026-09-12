@@ -507,9 +507,8 @@ showProject(0);
 
 
 /* ==================================================
-    ===== EmailJS Contact Form ===== 
-================================================== */ 
-
+   ===== EmailJS Contact Form + EMAIL VALIDATION =====
+================================================== */
 
 emailjs.init({
     publicKey: "suyjrkT1LHt_1Nfz3"
@@ -520,53 +519,379 @@ const contactForm = document.getElementById("contact-form");
 const successPopup = document.getElementById("success-popup");
 const popupClose = document.getElementById("popup-close");
 
-contactForm.addEventListener("submit", async function (event) {
-    event.preventDefault();
 
-    const button = contactForm.querySelector(".btn");
-    const originalText = button.textContent;
+/* ==================================================
+   ABSTRACT API KEY
+================================================== */
 
-    button.disabled = true;
-    button.textContent = "Sending...";
+// এখানে তোমার Abstract API key বসাবে
+const ABSTRACT_API_KEY = "5e449e9d81cd47c09564f9180c318801";
+
+
+/* ==================================================
+   ERROR POPUP
+================================================== */
+
+let errorPopup = document.getElementById("error-popup");
+
+if (!errorPopup) {
+
+    errorPopup = document.createElement("div");
+
+    errorPopup.id = "error-popup";
+
+    errorPopup.innerHTML = `
+        <div class="popup-box">
+            <div class="popup-icon">
+                <i class="fa-solid fa-circle-exclamation"></i>
+            </div>
+
+            <h2>Invalid Email!</h2>
+
+            <p id="error-message">
+                Please enter a valid existing email address.
+            </p>
+
+            <button type="button" id="error-popup-close" class="btn">
+                OK
+            </button>
+        </div>
+    `;
+
+    document.body.appendChild(errorPopup);
+}
+
+
+const errorPopupClose =
+    document.getElementById("error-popup-close");
+
+
+/* ==================================================
+   SHOW ERROR POPUP
+================================================== */
+
+function showErrorPopup(message) {
+
+    const errorMessage =
+        document.getElementById("error-message");
+
+    errorMessage.textContent = message;
+
+    errorPopup.classList.add("active");
+}
+
+
+/* ==================================================
+   CLOSE ERROR POPUP
+================================================== */
+
+errorPopupClose.addEventListener("click", function () {
+
+    errorPopup.classList.remove("active");
+
+});
+
+
+errorPopup.addEventListener("click", function (event) {
+
+    if (event.target === errorPopup) {
+
+        errorPopup.classList.remove("active");
+
+    }
+
+});
+
+
+/* ==================================================
+   CHECK EMAIL
+================================================== */
+
+async function validateEmail(email) {
 
     try {
-        await emailjs.sendForm(
-            "service_jj618nw",
-            "template_jjmotqg",
-            contactForm
+
+        const response = await fetch(
+            `https://emailvalidation.abstractapi.com/v1/?api_key=${ABSTRACT_API_KEY}&email=${encodeURIComponent(email)}`
         );
 
-        contactForm.reset();
 
-        /* Show stylish popup */
-        successPopup.classList.add("active");
+        if (!response.ok) {
+
+            throw new Error(
+                "Email validation service is unavailable."
+            );
+
+        }
+
+
+        const data = await response.json();
+
+        console.log("Email Validation Result:", data);
+
+
+        /*
+         * Check:
+         * 1. syntactically_valid
+         * 2. deliverability
+         * 3. smtp_valid
+         */
+
+        if (
+            data.is_valid_format?.value !== true
+        ) {
+
+            return {
+                valid: false,
+                message:
+                    "Please enter a valid email address."
+            };
+
+        }
+
+
+        if (
+            data.is_smtp_valid?.value === false
+        ) {
+
+            return {
+                valid: false,
+                message:
+                    "This email address does not appear to exist. Please use an existing email address."
+            };
+
+        }
+
+
+        if (
+            data.is_deliverable === false
+        ) {
+
+            return {
+                valid: false,
+                message:
+                    "This email address is not deliverable. Please enter an existing email address."
+            };
+
+        }
+
+
+        return {
+            valid: true
+        };
+
 
     } catch (error) {
 
-        console.error("EmailJS Error:", error);
+        console.error(
+            "Email Validation Error:",
+            error
+        );
 
-        alert("Sorry! Your message could not be sent. Please try again.");
 
-    } finally {
+        return {
+            valid: null,
+            message:
+                "We could not verify your email right now. Please try again."
+        };
 
-        button.disabled = false;
-        button.textContent = originalText;
     }
-});
+
+}
 
 
-/* Close popup */
-popupClose.addEventListener("click", function () {
-    successPopup.classList.remove("active");
-});
+/* ==================================================
+   CONTACT FORM SUBMIT
+================================================== */
+
+contactForm.addEventListener(
+    "submit",
+    async function (event) {
+
+        event.preventDefault();
 
 
-/* Close popup by clicking outside */
-successPopup.addEventListener("click", function (event) {
-    if (event.target === successPopup) {
-        successPopup.classList.remove("active");
+        const button =
+            contactForm.querySelector(".btn");
+
+        const originalText =
+            button.textContent;
+
+
+        /* Get email */
+
+        const emailInput =
+            contactForm.querySelector(
+                'input[type="email"]'
+            );
+
+        const email =
+            emailInput.value.trim();
+
+
+        /* Disable button */
+
+        button.disabled = true;
+
+        button.textContent =
+            "Checking Email...";
+
+
+        try {
+
+            /* ==========================================
+               CHECK EMAIL EXISTENCE
+            ========================================== */
+
+            const emailResult =
+                await validateEmail(email);
+
+
+            /* ==========================================
+               EMAIL INVALID / DOES NOT EXIST
+            ========================================== */
+
+            if (emailResult.valid === false) {
+
+                showErrorPopup(
+                    emailResult.message
+                );
+
+                return;
+
+            }
+
+
+            /* ==========================================
+               API ERROR
+            ========================================== */
+
+            if (emailResult.valid === null) {
+
+                showErrorPopup(
+                    emailResult.message
+                );
+
+                return;
+
+            }
+
+
+            /* ==========================================
+               EMAIL IS VALID
+               NOW SEND THROUGH EMAILJS
+            ========================================== */
+
+            button.textContent =
+                "Sending...";
+
+
+            await emailjs.sendForm(
+                "service_jj618nw",
+                "template_jjmotqg",
+                contactForm
+            );
+
+
+            /* ==========================================
+               SUCCESS
+            ========================================== */
+
+            contactForm.reset();
+
+            successPopup.classList.add(
+                "active"
+            );
+
+
+        } catch (error) {
+
+            console.error(
+                "EmailJS Error:",
+                error
+            );
+
+
+            showErrorPopup(
+                "Sorry! Your message could not be sent. Please try again."
+            );
+
+
+        } finally {
+
+            button.disabled = false;
+
+            button.textContent =
+                originalText;
+
+        }
+
     }
-});
+);
+
+
+/* ==================================================
+   CLOSE SUCCESS POPUP
+================================================== */
+
+popupClose.addEventListener(
+    "click",
+    function () {
+
+        successPopup.classList.remove(
+            "active"
+        );
+
+    }
+);
+
+
+/* ==================================================
+   CLOSE SUCCESS POPUP OUTSIDE
+================================================== */
+
+successPopup.addEventListener(
+    "click",
+    function (event) {
+
+        if (
+            event.target === successPopup
+        ) {
+
+            successPopup.classList.remove(
+                "active"
+            );
+
+        }
+
+    }
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* ==================================================
@@ -611,6 +936,23 @@ window.addEventListener("hashchange", () => {
 profileCard?.addEventListener("click", () => {
     profileCard.classList.toggle("flipped");
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
