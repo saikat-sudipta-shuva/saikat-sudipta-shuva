@@ -330,7 +330,7 @@ const projects = [
         title: "Online Payment System",
         description: "An online payment system using HTML, CSS, and JavaScript, focuses on providing a smooth payment experience with interactive forms, payment method selection, input validation, transaction history, and responsive design for different screen sizes.",
         tech: "HTML, CSS, JS",
-        image: "digitalbanking.png",
+        image: "assets/digitalbanking.png",
         alt: "Online payment system",
 
         live: "https://saikat-sudipta-shuva.github.io/OnlineBanking/",
@@ -342,7 +342,7 @@ const projects = [
         title: "Hospital Management System",
         description: "A user-friendly hospital management system that manages patients, doctors, medical records, and billing efficiently through a centralized digital platform.",
         tech: "HTML, CSS, PHP, MySQL",
-        image: "hospital.png",
+        image: "assets/hospital.png",
         alt: "Hospital Management System",
 
         live: "https://example.com",
@@ -354,7 +354,7 @@ const projects = [
         title: "Gachpala Online Nursery",
         description: "An online nursery project developed using HTML, Bootstrap CSS, PHP and JavaScript, with MongoDB used as the database.",
         tech: "HTML, Bootstrap CSS, PHP, JavaScript, MongoDB",
-        image: "project3.jpg",
+        image: "assets/project3.jpg",
         alt: "Gachpala Online Nursery",
 
         live: "https://example.com",
@@ -366,7 +366,7 @@ const projects = [
         title: "Wholesale Database Management System",
         description: "A wholesale database management system designed with ERDPlus and implemented using XAMPP and MySQL to manage products, stock, customers, orders, payments, and deliveries.",
         tech: "ERDPlus, XAMPP, MySQL",
-        image: "wholesale.png",
+        image: "assets/wholesale.png",
         alt: "Wholesale Database Management System",
 
         live: "https://example.com",
@@ -378,7 +378,7 @@ const projects = [
         title: "Pharmacy Shop Management System",
         description: "A pharmacy shop management system developed using ERDPlus, Oracle APEX, and PL/SQL to efficiently manage medicines, inventory, customers, sales, suppliers, and transactions through a structured database.",
         tech: "ERDPlus, Oracle APEX, PL/SQL",
-        image: "pharmacy.png",
+        image: "assets/pharmacy.png",
         alt: "Pharmacy Shop Management System",
 
         live: "https://example.com",
@@ -390,7 +390,7 @@ const projects = [
         title: "Automated Bangla Speech to Text",
         description: "A deep learning based Bangla speech-to-text conversion system that transforms spoken Bangla into meaningful written text, aiming to enhance voice recognition and support the advancement of Bangla-focused natural language processing applications.",
         tech: "Deep Learning, NLP",
-        image: "bangla.png",
+        image: "assets/bangla.png",
         alt: "Automated Bangla Speech to Text",
 
         live: "https://example.com",
