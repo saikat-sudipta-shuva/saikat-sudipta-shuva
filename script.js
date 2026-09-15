@@ -1,5 +1,5 @@
 /* ==================================================
-   ===== MOBILE MENU =====
+   MOBILE MENU
 ================================================== */
 
 const menuBtn = document.getElementById("menu-btn");
@@ -20,9 +20,13 @@ menuBtn.addEventListener("click", () => {
 
         icon.classList.remove("fa-xmark");
         icon.classList.add("fa-bars");
+
     }
+
 });
 
+
+/* Close menu after clicking navigation */
 
 document.querySelectorAll("nav a").forEach(link => {
 
@@ -41,7 +45,7 @@ document.querySelectorAll("nav a").forEach(link => {
 
 
 /* ==================================================
-   ===== DARK / LIGHT THEME =====
+   DARK / LIGHT THEME
 ================================================== */
 
 const themeBtn = document.getElementById("theme-btn");
@@ -56,50 +60,41 @@ function setTheme(theme) {
         lightMode
     );
 
+    // Same icon for both Dark & Light mode
     const icon = themeBtn.querySelector("i");
 
-    /* Keep moon icon */
     icon.classList.remove("fa-sun");
     icon.classList.add("fa-moon");
 
-}
-
-
-const savedTheme =
-    localStorage.getItem("theme");
-
-
-if (savedTheme === "light") {
-
-    setTheme("light");
-
-} else {
-
-    setTheme("dark");
-
+    localStorage.setItem(
+        "theme",
+        theme
+    );
 }
 
 
 themeBtn.addEventListener("click", () => {
 
-    const isLight =
-        document.body.classList.contains("light");
+    const currentTheme =
+        document.body.classList.contains("light")
+            ? "dark"
+            : "light";
 
-    const newTheme =
-        isLight ? "dark" : "light";
-
-    setTheme(newTheme);
-
-    localStorage.setItem(
-        "theme",
-        newTheme
-    );
+    setTheme(currentTheme);
 
 });
 
 
+/* Load saved theme */
+
+if (localStorage.getItem("theme") === "light") {
+
+    setTheme("light");
+
+}
+
 /* ==================================================
-   ===== RESUME TABS =====
+   RESUME TABS
 ================================================== */
 
 const tabButtons =
@@ -116,11 +111,17 @@ tabButtons.forEach(button => {
         const target =
             button.dataset.tab;
 
+
+        /* Remove active from buttons */
+
         tabButtons.forEach(btn => {
 
             btn.classList.remove("active");
 
         });
+
+
+        /* Hide all contents */
 
         tabContents.forEach(content => {
 
@@ -128,14 +129,17 @@ tabButtons.forEach(button => {
 
         });
 
+
+        /* Activate selected tab */
+
         button.classList.add("active");
 
-        const targetContent =
+        const selectedContent =
             document.getElementById(target);
 
-        if (targetContent) {
+        if (selectedContent) {
 
-            targetContent.classList.add("active");
+            selectedContent.classList.add("active");
 
         }
 
@@ -145,7 +149,7 @@ tabButtons.forEach(button => {
 
 
 /* ==================================================
-   ===== ACTIVE NAVIGATION =====
+   ACTIVE NAVIGATION
 ================================================== */
 
 const sections =
@@ -162,15 +166,15 @@ function updateActiveNavigation() {
     sections.forEach(section => {
 
         const sectionTop =
-            section.offsetTop - 150;
+            section.offsetTop - 180;
 
-        const sectionHeight =
-            section.offsetHeight;
+        const sectionBottom =
+            sectionTop + section.offsetHeight;
+
 
         if (
             window.scrollY >= sectionTop &&
-            window.scrollY <
-            sectionTop + sectionHeight
+            window.scrollY < sectionBottom
         ) {
 
             currentSection =
@@ -185,11 +189,9 @@ function updateActiveNavigation() {
 
         link.classList.remove("active");
 
-        const href =
-            link.getAttribute("href");
-
         if (
-            href === `#${currentSection}`
+            link.getAttribute("href")
+            === "#" + currentSection
         ) {
 
             link.classList.add("active");
@@ -206,18 +208,18 @@ window.addEventListener(
     updateActiveNavigation
 );
 
-updateActiveNavigation();
+
+window.addEventListener(
+    "load",
+    updateActiveNavigation
+);
 
 
 /* ==================================================
-   ===== TYPING EFFECT =====
+   TYPING EFFECT
 ================================================== */
 
-const typingText =
-    document.querySelector(".typing-text");
-
-
-const typingWords = [
+const words = [
 
     "CSE Graduate",
     "Software Developer",
@@ -229,64 +231,67 @@ const typingWords = [
 
 
 let wordIndex = 0;
-let charIndex = 0;
-let isDeleting = false;
+
+let characterIndex = 0;
+
+let deleting = false;
+
+
+const typingElement =
+    document.querySelector(".typing");
 
 
 function typeEffect() {
 
-    if (!typingText) return;
-
-
     const currentWord =
-        typingWords[wordIndex];
+        words[wordIndex];
 
 
-    if (!isDeleting) {
+    if (!deleting) {
 
-        typingText.textContent =
+        typingElement.textContent =
             currentWord.substring(
                 0,
-                charIndex + 1
+                characterIndex + 1
             );
 
-        charIndex++;
+        characterIndex++;
 
 
         if (
-            charIndex ===
+            characterIndex ===
             currentWord.length
         ) {
 
-            isDeleting = true;
+            deleting = true;
 
             setTimeout(
                 typeEffect,
-                1200
+                1500
             );
 
             return;
-        }
 
+        }
 
     } else {
 
-        typingText.textContent =
+        typingElement.textContent =
             currentWord.substring(
                 0,
-                charIndex - 1
+                characterIndex - 1
             );
 
-        charIndex--;
+        characterIndex--;
 
 
-        if (charIndex === 0) {
+        if (characterIndex === 0) {
 
-            isDeleting = false;
+            deleting = false;
 
             wordIndex =
-                (wordIndex + 1) %
-                typingWords.length;
+                (wordIndex + 1)
+                % words.length;
 
         }
 
@@ -295,7 +300,7 @@ function typeEffect() {
 
     setTimeout(
         typeEffect,
-        isDeleting ? 60 : 100
+        deleting ? 60 : 100
     );
 
 }
@@ -305,7 +310,7 @@ typeEffect();
 
 
 /* ==================================================
-   ===== PROJECT SLIDER =====
+   PROJECT SLIDER
 ================================================== */
 
 const projects = [
@@ -313,279 +318,214 @@ const projects = [
     {
         number: "01",
         title: "Online Payment System",
-        description:
-            "A modern online payment system with interactive forms, payment method selection, input validation, transaction history, and responsive design.",
+        description: "An online payment system using HTML, CSS, and JavaScript, focuses on providing a smooth payment experience with interactive forms, payment method selection, input validation, transaction history, and responsive design for different screen sizes.",
         tech: "HTML, CSS, JS",
         image: "assets/digitalbanking.png",
-        live:
-            "https://saikat-sudipta-shuva.github.io/OnlineBanking/",
-        github:
-            "https://github.com/saikat-sudipta-shuva/OnlineBanking"
-    },
+        alt: "Online payment system",
 
+        live: "https://saikat-sudipta-shuva.github.io/OnlineBanking/",
+        github: "https://github.com/saikat-sudipta-shuva/OnlineBanking"
+    },
 
     {
         number: "02",
         title: "Hospital Management System",
-        description:
-            "A complete hospital management system that manages patients, doctors, medical records, and billing through a centralized digital platform.",
+        description: "A user-friendly hospital management system that manages patients, doctors, medical records, and billing efficiently through a centralized digital platform.",
         tech: "HTML, CSS, PHP, MySQL",
         image: "assets/hospital.png",
-        live: "#",
-        github: "#"
-    },
+        alt: "Hospital Management System",
 
+        live: "https://example.com",
+        github: "https://github.com/"
+    },
 
     {
         number: "03",
         title: "Gachpala Online Nursery",
-        description:
-            "An online nursery platform for browsing and managing plants with an easy-to-use interface and dynamic backend functionality.",
-        tech:
-            "HTML, Bootstrap CSS, PHP, JavaScript, MongoDB",
+        description: "An online nursery project developed using HTML, Bootstrap CSS, PHP and JavaScript, with MongoDB used as the database.",
+        tech: "HTML, Bootstrap CSS, PHP, JavaScript, MongoDB",
         image: "assets/project3.jpg",
-        live: "#",
-        github: "#"
-    },
+        alt: "Gachpala Online Nursery",
 
+        live: "https://example.com",
+        github: "https://github.com/"
+    },
 
     {
         number: "04",
-        title:
-            "Wholesale Database Management System",
-        description:
-            "A database management system designed to organize wholesale business information, products, customers, and transactions.",
-        tech: "ERDPlus, MySQL, XAMPP",
+        title: "Wholesale Database Management System",
+        description: "A wholesale database management system designed with ERDPlus and implemented using XAMPP and MySQL to manage products, stock, customers, orders, payments, and deliveries.",
+        tech: "ERDPlus, XAMPP, MySQL",
         image: "assets/wholesale.png",
-        live: "#",
-        github:
-            "https://github.com/saikat-sudipta-shuva/Wholesale-Database-Management-System"
-    },
+        alt: "Wholesale Database Management System",
 
+        live: "https://example.com",
+        github: "https://github.com/saikat-sudipta-shuva/Wholesale-Database-Management-System"
+    },
 
     {
         number: "05",
-        title:
-            "Pharmacy Shop Management System",
-        description:
-            "A pharmacy management system for managing medicines, customers, sales, and inventory using database technologies.",
-        tech:
-            "ERDPlus, Oracle APEX, PL/SQL",
+        title: "Pharmacy Shop Management System",
+        description: "A pharmacy shop management system developed using ERDPlus, Oracle APEX, and PL/SQL to efficiently manage medicines, inventory, customers, sales, suppliers, and transactions through a structured database.",
+        tech: "ERDPlus, Oracle APEX, PL/SQL",
         image: "assets/pharmacy.png",
-        live: "#",
-        github:
-            "https://github.com/saikat-sudipta-shuva/Pharmacy-Shop-Management-System"
-    },
+        alt: "Pharmacy Shop Management System",
 
+        live: "https://example.com",
+        github: "https://github.com/saikat-sudipta-shuva/Pharmacy-Shop-Management-System"
+    },
 
     {
         number: "06",
-        title:
-            "Automated Bangla Speech to Text",
-        description:
-            "A deep learning and NLP based system that converts Bangla speech into text automatically.",
-        tech:
-            "Deep Learning, NLP",
+        title: "Automated Bangla Speech to Text",
+        description: "A deep learning based Bangla speech-to-text conversion system that transforms spoken Bangla into meaningful written text, aiming to enhance voice recognition and support the advancement of Bangla-focused natural language processing applications.",
+        tech: "Deep Learning, NLP",
         image: "assets/bangla.png",
-        live: "#",
-        github: "#"
+        alt: "Automated Bangla Speech to Text",
+
+        live: "https://example.com",
+        github: "https://github.com/"
     }
 
 ];
 
 
-let currentProject = 0;
+/* ==================================================
+   CURRENT PROJECT
+================================================== */
+
+let projectIndex = 0;
 
 
-const projectNumber =
-    document.getElementById("project-number");
+/* ==================================================
+   HTML ELEMENTS
+================================================== */
 
-const projectTitle =
-    document.getElementById("project-title");
+const projectNumber = document.getElementById("project-number");
+const projectTitle = document.getElementById("project-title");
+const projectDescription = document.getElementById("project-description");
+const projectTech = document.getElementById("project-tech");
+const projectImage = document.getElementById("project-image");
 
-const projectDescription =
-    document.getElementById("project-description");
+const projectLive = document.getElementById("project-live");
+const projectGithub = document.getElementById("project-github");
 
-const projectTech =
-    document.getElementById("project-tech");
+const projectPrev = document.getElementById("project-prev");
+const projectNext = document.getElementById("project-next");
 
-const projectImage =
-    document.getElementById("project-image");
 
-const projectLive =
-    document.getElementById("project-live");
-
-const projectGithub =
-    document.getElementById("project-github");
-
-const projectPrev =
-    document.getElementById("project-prev");
-
-const projectNext =
-    document.getElementById("project-next");
-
+/* ==================================================
+   SHOW PROJECT
+================================================== */
 
 function showProject(index) {
 
-    const project =
-        projects[index];
+    projectIndex = (index + projects.length) % projects.length;
 
-    if (projectNumber) {
-
-        projectNumber.textContent =
-            project.number;
-
-    }
+    const project = projects[projectIndex];
 
 
-    if (projectTitle) {
+    /* Project information */
 
-        projectTitle.textContent =
-            project.title;
+    projectNumber.textContent = project.number;
 
-    }
+    projectTitle.textContent = project.title;
 
+    projectDescription.textContent = project.description;
 
-    if (projectDescription) {
+    projectTech.textContent = project.tech;
 
-        projectDescription.textContent =
-            project.description;
+    projectImage.src = project.image;
 
-    }
-
-
-    if (projectTech) {
-
-        projectTech.textContent =
-            project.tech;
-
-    }
+    projectImage.alt = project.alt;
 
 
-    if (projectImage) {
+    /* ==================================================
+       UPDATE LIVE PROJECT LINK
+    ================================================== */
 
-        projectImage.src =
-            project.image;
-
-        projectImage.alt =
-            project.title;
-
-    }
+    projectLive.href = project.live;
 
 
-    if (projectLive) {
+    /* ==================================================
+       UPDATE GITHUB LINK
+    ================================================== */
 
-        projectLive.href =
-            project.live;
-
-    }
-
-
-    if (projectGithub) {
-
-        projectGithub.href =
-            project.github;
-
-    }
+    projectGithub.href = project.github;
 
 }
 
 
-projectPrev.addEventListener(
-    "click",
-    () => {
+/* ==================================================
+   PREVIOUS BUTTON
+================================================== */
 
-        currentProject--;
+projectPrev.addEventListener("click", function () {
 
-        if (currentProject < 0) {
+    showProject(projectIndex - 1);
 
-            currentProject =
-                projects.length - 1;
-
-        }
-
-        showProject(currentProject);
-
-    }
-);
+});
 
 
-projectNext.addEventListener(
-    "click",
-    () => {
+/* ==================================================
+   NEXT BUTTON
+================================================== */
 
-        currentProject++;
+projectNext.addEventListener("click", function () {
 
-        if (
-            currentProject >=
-            projects.length
-        ) {
+    showProject(projectIndex + 1);
 
-            currentProject = 0;
+});
 
-        }
 
-        showProject(currentProject);
-
-    }
-);
-
+/* ==================================================
+   LOAD FIRST PROJECT
+================================================== */
 
 showProject(0);
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* ==================================================
    ===== EMAILJS CONTACT FORM + AUTO REPLY =====
 ================================================== */
 
+
+/* ==================================================
+   ===== EMAILJS INITIALIZE =====
+================================================== */
+
 emailjs.init({
-
-    publicKey:
-        "suyjrkT1LHt_1Nfz3"
-
+    publicKey: "suyjrkT1LHt_1Nfz3"
 });
 
 
-const contactForm =
-    document.getElementById(
-        "contact-form"
-    );
-
-
-const successPopup =
-    document.getElementById(
-        "success-popup"
-    );
-
-
-const popupClose =
-    document.getElementById(
-        "popup-close"
-    );
-
-
 /* ==================================================
-   EMAILJS IDs
+   ===== ELEMENTS =====
 ================================================== */
 
-const SERVICE_ID =
-    "service_jj618nw";
+const contactForm =
+    document.getElementById("contact-form");
 
+const successPopup =
+    document.getElementById("success-popup");
 
-/* Your existing Contact/Admin template */
-
-const CONTACT_TEMPLATE_ID =
-    "template_jjmotqg";
-
-
-/* Your NEW Auto Reply template */
-
-const AUTOREPLY_TEMPLATE_ID =
-    "template_4aptzwj";
+const popupClose =
+    document.getElementById("popup-close");
 
 
 /* ==================================================
-   CONTACT FORM SUBMIT
+   ===== CONTACT FORM SUBMIT =====
 ================================================== */
 
 if (contactForm) {
@@ -597,73 +537,74 @@ if (contactForm) {
             event.preventDefault();
 
 
+            /* ==========================================
+               GET SUBMIT BUTTON
+            ========================================== */
+
             const button =
-                contactForm.querySelector(
-                    ".btn"
-                );
+                contactForm.querySelector(".btn");
 
 
             const originalText =
                 button.textContent;
 
 
-            /* Disable button */
+            /* ==========================================
+               DISABLE BUTTON
+            ========================================== */
 
             button.disabled = true;
 
-            button.textContent =
-                "Sending...";
+            button.textContent = "Sending...";
 
 
             try {
 
-                /* ======================================
-                   1. SEND MESSAGE TO ADMIN
-                ====================================== */
+                /* ==========================================
+                   1. SEND MESSAGE TO YOU
+                   
+                   This template sends the visitor's
+                   message to your email.
+                ========================================== */
 
                 await emailjs.sendForm(
-
-                    SERVICE_ID,
-
-                    CONTACT_TEMPLATE_ID,
-
+                    "service_jj618nw",
+                    "template_jjmotqg",
                     contactForm
-
                 );
 
 
-                /* ======================================
+                /* ==========================================
                    2. SEND AUTO REPLY TO VISITOR
-                ====================================== */
+                   
+                   IMPORTANT:
+                   In this EmailJS template,
+                   "To Email" must be {{email}}
+                ========================================== */
 
                 await emailjs.sendForm(
-
-                    SERVICE_ID,
-
-                    AUTOREPLY_TEMPLATE_ID,
-
+                    "service_jj618nw",
+                    "template_4aptzwj",
                     contactForm
-
                 );
 
 
-                /* ======================================
+                /* ==========================================
                    SUCCESS
-                ====================================== */
+                ========================================== */
 
                 contactForm.reset();
 
-
                 if (successPopup) {
-
-                    successPopup.classList.add(
-                        "active"
-                    );
-
+                    successPopup.classList.add("active");
                 }
 
 
             } catch (error) {
+
+                /* ==========================================
+                   ERROR
+                ========================================== */
 
                 console.error(
                     "EmailJS Error:",
@@ -672,15 +613,17 @@ if (contactForm) {
 
 
                 alert(
-                    "Message could not be sent. Please try again."
+                    "Sorry! Your message could not be sent. Please try again."
                 );
 
 
             } finally {
 
-                button.disabled =
-                    false;
+                /* ==========================================
+                   ENABLE BUTTON
+                ========================================== */
 
+                button.disabled = false;
 
                 button.textContent =
                     originalText;
@@ -697,15 +640,13 @@ if (contactForm) {
    ===== CLOSE SUCCESS POPUP =====
 ================================================== */
 
-if (popupClose) {
+if (popupClose && successPopup) {
 
     popupClose.addEventListener(
         "click",
         function () {
 
-            successPopup.classList.remove(
-                "active"
-            );
+            successPopup.classList.remove("active");
 
         }
     );
@@ -714,7 +655,7 @@ if (popupClose) {
 
 
 /* ==================================================
-   ===== CLOSE POPUP OUTSIDE =====
+   ===== CLOSE POPUP BY CLICKING OUTSIDE =====
 ================================================== */
 
 if (successPopup) {
@@ -724,13 +665,10 @@ if (successPopup) {
         function (event) {
 
             if (
-                event.target ===
-                successPopup
+                event.target === successPopup
             ) {
 
-                successPopup.classList.remove(
-                    "active"
-                );
+                successPopup.classList.remove("active");
 
             }
 
@@ -742,149 +680,118 @@ if (successPopup) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
 /* ==================================================
-   ===== PROFILE IMAGE AUTO FLIP =====
+   PROFILE IMAGE AUTO FLIP WHEN HOME IS OPENED
 ================================================== */
 
-const profileCard =
-    document.querySelector(
-        ".profile-card"
-    );
-
+const profileCard = document.querySelector(".profile-card");
 
 function homeFlip() {
-
     if (!profileCard) return;
 
+    // Start from normal position
+    profileCard.classList.remove("flipped");
 
-    profileCard.classList.remove(
-        "flipped"
-    );
-
-
+    // Flip
     setTimeout(() => {
+        profileCard.classList.add("flipped");
 
-        profileCard.classList.add(
-            "flipped"
-        );
-
-
+        // Back to normal after 2 seconds
         setTimeout(() => {
-
-            profileCard.classList.remove(
-                "flipped"
-            );
-
+            profileCard.classList.remove("flipped");
         }, 2000);
 
-
     }, 50);
-
 }
 
-
-window.addEventListener(
-    "load",
-    () => {
-
-        if (
-            location.hash === "#home" ||
-            location.hash === ""
-        ) {
-
-            homeFlip();
-
-        }
-
+// Run when page is refreshed
+window.addEventListener("load", () => {
+    if (location.hash === "#home" || location.hash === "") {
+        homeFlip();
     }
-);
+});
 
-
-window.addEventListener(
-    "hashchange",
-    () => {
-
-        if (
-            location.hash === "#home"
-        ) {
-
-            homeFlip();
-
-        }
-
+// Run whenever user goes to Home
+window.addEventListener("hashchange", () => {
+    if (location.hash === "#home") {
+        homeFlip();
     }
-);
+});
 
-
-profileCard?.addEventListener(
-    "click",
-    () => {
-
-        profileCard.classList.toggle(
-            "flipped"
-        );
-
-    }
-);
+// Manual click on profile card
+profileCard?.addEventListener("click", () => {
+    profileCard.classList.toggle("flipped");
+});
 
 
 
 
 
-/* ==================================================
-   ===== ACHIEVEMENT CARD IMAGE HOVER =====
-================================================== */
-
-const experienceCards =
-    document.querySelectorAll(
-        ".experience-card"
-    );
 
 
-experienceCards.forEach(card => {
-
-    const originalContent =
-        card.innerHTML;
 
 
-    card.addEventListener(
-        "mouseenter",
-        () => {
-
-            const image =
-                card.dataset.image;
 
 
-            if (!image) return;
 
 
-            card.innerHTML = `
-
-                <img
-                    src="${image}"
-                    alt="Achievement"
-                    style="
-                        width:100%;
-                        height:100%;
-                        object-fit:contain;
-                        border-radius:inherit;
-                    "
-                >
-
-            `;
-
-        }
-    );
 
 
-    card.addEventListener(
-        "mouseleave",
-        () => {
 
-            card.innerHTML =
-                originalContent;
 
-        }
-    );
+
+
+
+
+
+ 
+// ==================================================
+// EXPERIENCE CARD IMAGE ON HOVER
+// ==================================================
+
+const experienceCards = document.querySelectorAll(".experience-card");
+
+experienceCards.forEach((card) => {
+
+    // Save original content
+    const originalContent = card.innerHTML;
+
+    card.addEventListener("mouseenter", function () {
+
+        // Don't change if already showing image
+        if (this.classList.contains("show-image")) return;
+
+        const imagePath = this.dataset.image;
+
+        // Create image
+        const image = document.createElement("img");
+        image.src = imagePath;
+        image.alt = "Achievement Certificate";
+        image.classList.add("achievement-image");
+
+        // Clear card and show image
+        this.innerHTML = "";
+        this.appendChild(image);
+
+        this.classList.add("show-image");
+    });
+
+    card.addEventListener("mouseleave", function () {
+
+        // Restore original card
+        this.innerHTML = originalContent;
+        this.classList.remove("show-image");
+    });
 
 });
