@@ -1,5 +1,5 @@
 /* ==================================================
-   MOBILE MENU
+   ===== MOBILE MENU =====
 ================================================== */
 
 const menuBtn = document.getElementById("menu-btn");
@@ -20,13 +20,9 @@ menuBtn.addEventListener("click", () => {
 
         icon.classList.remove("fa-xmark");
         icon.classList.add("fa-bars");
-
     }
-
 });
 
-
-/* Close menu after clicking navigation */
 
 document.querySelectorAll("nav a").forEach(link => {
 
@@ -45,7 +41,7 @@ document.querySelectorAll("nav a").forEach(link => {
 
 
 /* ==================================================
-   DARK / LIGHT THEME
+   ===== DARK / LIGHT THEME =====
 ================================================== */
 
 const themeBtn = document.getElementById("theme-btn");
@@ -62,49 +58,48 @@ function setTheme(theme) {
 
     const icon = themeBtn.querySelector("i");
 
-    if (lightMode) {
+    /* Keep moon icon */
+    icon.classList.remove("fa-sun");
+    icon.classList.add("fa-moon");
 
-        icon.classList.remove("fa-moon");
-        icon.classList.add("fa-sun");
+}
 
-    } else {
 
-        icon.classList.remove("fa-sun");
-        icon.classList.add("fa-moon");
+const savedTheme =
+    localStorage.getItem("theme");
 
-    }
 
-    localStorage.setItem(
-        "theme",
-        theme
-    );
+if (savedTheme === "light") {
+
+    setTheme("light");
+
+} else {
+
+    setTheme("dark");
 
 }
 
 
 themeBtn.addEventListener("click", () => {
 
-    const currentTheme =
-        document.body.classList.contains("light")
-            ? "dark"
-            : "light";
+    const isLight =
+        document.body.classList.contains("light");
 
-    setTheme(currentTheme);
+    const newTheme =
+        isLight ? "dark" : "light";
+
+    setTheme(newTheme);
+
+    localStorage.setItem(
+        "theme",
+        newTheme
+    );
 
 });
 
 
-/* Load saved theme */
-
-if (localStorage.getItem("theme") === "light") {
-
-    setTheme("light");
-
-}
-
-
 /* ==================================================
-   RESUME TABS
+   ===== RESUME TABS =====
 ================================================== */
 
 const tabButtons =
@@ -121,17 +116,11 @@ tabButtons.forEach(button => {
         const target =
             button.dataset.tab;
 
-
-        /* Remove active from buttons */
-
         tabButtons.forEach(btn => {
 
             btn.classList.remove("active");
 
         });
-
-
-        /* Hide all contents */
 
         tabContents.forEach(content => {
 
@@ -139,17 +128,14 @@ tabButtons.forEach(button => {
 
         });
 
-
-        /* Activate selected tab */
-
         button.classList.add("active");
 
-        const selectedContent =
+        const targetContent =
             document.getElementById(target);
 
-        if (selectedContent) {
+        if (targetContent) {
 
-            selectedContent.classList.add("active");
+            targetContent.classList.add("active");
 
         }
 
@@ -159,7 +145,7 @@ tabButtons.forEach(button => {
 
 
 /* ==================================================
-   ACTIVE NAVIGATION
+   ===== ACTIVE NAVIGATION =====
 ================================================== */
 
 const sections =
@@ -176,15 +162,15 @@ function updateActiveNavigation() {
     sections.forEach(section => {
 
         const sectionTop =
-            section.offsetTop - 180;
+            section.offsetTop - 150;
 
-        const sectionBottom =
-            sectionTop + section.offsetHeight;
-
+        const sectionHeight =
+            section.offsetHeight;
 
         if (
             window.scrollY >= sectionTop &&
-            window.scrollY < sectionBottom
+            window.scrollY <
+            sectionTop + sectionHeight
         ) {
 
             currentSection =
@@ -199,9 +185,11 @@ function updateActiveNavigation() {
 
         link.classList.remove("active");
 
+        const href =
+            link.getAttribute("href");
+
         if (
-            link.getAttribute("href")
-            === "#" + currentSection
+            href === `#${currentSection}`
         ) {
 
             link.classList.add("active");
@@ -218,18 +206,18 @@ window.addEventListener(
     updateActiveNavigation
 );
 
-
-window.addEventListener(
-    "load",
-    updateActiveNavigation
-);
+updateActiveNavigation();
 
 
 /* ==================================================
-   TYPING EFFECT
+   ===== TYPING EFFECT =====
 ================================================== */
 
-const words = [
+const typingText =
+    document.querySelector(".typing-text");
+
+
+const typingWords = [
 
     "CSE Graduate",
     "Software Developer",
@@ -241,67 +229,64 @@ const words = [
 
 
 let wordIndex = 0;
-
-let characterIndex = 0;
-
-let deleting = false;
-
-
-const typingElement =
-    document.querySelector(".typing");
+let charIndex = 0;
+let isDeleting = false;
 
 
 function typeEffect() {
 
+    if (!typingText) return;
+
+
     const currentWord =
-        words[wordIndex];
+        typingWords[wordIndex];
 
 
-    if (!deleting) {
+    if (!isDeleting) {
 
-        typingElement.textContent =
+        typingText.textContent =
             currentWord.substring(
                 0,
-                characterIndex + 1
+                charIndex + 1
             );
 
-        characterIndex++;
+        charIndex++;
 
 
         if (
-            characterIndex ===
+            charIndex ===
             currentWord.length
         ) {
 
-            deleting = true;
+            isDeleting = true;
 
             setTimeout(
                 typeEffect,
-                1500
+                1200
             );
 
             return;
-
         }
+
 
     } else {
 
-        typingElement.textContent =
+        typingText.textContent =
             currentWord.substring(
                 0,
-                characterIndex - 1
+                charIndex - 1
             );
 
-        characterIndex--;
+        charIndex--;
 
 
-        if (characterIndex === 0) {
+        if (charIndex === 0) {
 
-            deleting = false;
+            isDeleting = false;
 
             wordIndex =
-                (wordIndex + 1)
-                % words.length;
+                (wordIndex + 1) %
+                typingWords.length;
 
         }
 
@@ -310,7 +295,7 @@ function typeEffect() {
 
     setTimeout(
         typeEffect,
-        deleting ? 60 : 100
+        isDeleting ? 60 : 100
     );
 
 }
@@ -320,7 +305,7 @@ typeEffect();
 
 
 /* ==================================================
-   PROJECT SLIDER
+   ===== PROJECT SLIDER =====
 ================================================== */
 
 const projects = [
@@ -328,419 +313,578 @@ const projects = [
     {
         number: "01",
         title: "Online Payment System",
-        description: "An online payment system using HTML, CSS, and JavaScript, focuses on providing a smooth payment experience with interactive forms, payment method selection, input validation, transaction history, and responsive design for different screen sizes.",
+        description:
+            "A modern online payment system with interactive forms, payment method selection, input validation, transaction history, and responsive design.",
         tech: "HTML, CSS, JS",
         image: "assets/digitalbanking.png",
-        alt: "Online payment system",
-
-        live: "https://saikat-sudipta-shuva.github.io/OnlineBanking/",
-        github: "https://github.com/saikat-sudipta-shuva/OnlineBanking"
+        live:
+            "https://saikat-sudipta-shuva.github.io/OnlineBanking/",
+        github:
+            "https://github.com/saikat-sudipta-shuva/OnlineBanking"
     },
+
 
     {
         number: "02",
         title: "Hospital Management System",
-        description: "A user-friendly hospital management system that manages patients, doctors, medical records, and billing efficiently through a centralized digital platform.",
+        description:
+            "A complete hospital management system that manages patients, doctors, medical records, and billing through a centralized digital platform.",
         tech: "HTML, CSS, PHP, MySQL",
         image: "assets/hospital.png",
-        alt: "Hospital Management System",
-
-        live: "https://example.com",
-        github: "https://github.com/"
+        live: "#",
+        github: "#"
     },
+
 
     {
         number: "03",
         title: "Gachpala Online Nursery",
-        description: "An online nursery project developed using HTML, Bootstrap CSS, PHP and JavaScript, with MongoDB used as the database.",
-        tech: "HTML, Bootstrap CSS, PHP, JavaScript, MongoDB",
+        description:
+            "An online nursery platform for browsing and managing plants with an easy-to-use interface and dynamic backend functionality.",
+        tech:
+            "HTML, Bootstrap CSS, PHP, JavaScript, MongoDB",
         image: "assets/project3.jpg",
-        alt: "Gachpala Online Nursery",
-
-        live: "https://example.com",
-        github: "https://github.com/"
+        live: "#",
+        github: "#"
     },
+
 
     {
         number: "04",
-        title: "Wholesale Database Management System",
-        description: "A wholesale database management system designed with ERDPlus and implemented using XAMPP and MySQL to manage products, stock, customers, orders, payments, and deliveries.",
-        tech: "ERDPlus, XAMPP, MySQL",
+        title:
+            "Wholesale Database Management System",
+        description:
+            "A database management system designed to organize wholesale business information, products, customers, and transactions.",
+        tech: "ERDPlus, MySQL, XAMPP",
         image: "assets/wholesale.png",
-        alt: "Wholesale Database Management System",
-
-        live: "https://example.com",
-        github: "https://github.com/saikat-sudipta-shuva/Wholesale-Database-Management-System"
+        live: "#",
+        github:
+            "https://github.com/saikat-sudipta-shuva/Wholesale-Database-Management-System"
     },
+
 
     {
         number: "05",
-        title: "Pharmacy Shop Management System",
-        description: "A pharmacy shop management system developed using ERDPlus, Oracle APEX, and PL/SQL to efficiently manage medicines, inventory, customers, sales, suppliers, and transactions through a structured database.",
-        tech: "ERDPlus, Oracle APEX, PL/SQL",
+        title:
+            "Pharmacy Shop Management System",
+        description:
+            "A pharmacy management system for managing medicines, customers, sales, and inventory using database technologies.",
+        tech:
+            "ERDPlus, Oracle APEX, PL/SQL",
         image: "assets/pharmacy.png",
-        alt: "Pharmacy Shop Management System",
-
-        live: "https://example.com",
-        github: "https://github.com/saikat-sudipta-shuva/Pharmacy-Shop-Management-System"
+        live: "#",
+        github:
+            "https://github.com/saikat-sudipta-shuva/Pharmacy-Shop-Management-System"
     },
+
 
     {
         number: "06",
-        title: "Automated Bangla Speech to Text",
-        description: "A deep learning based Bangla speech-to-text conversion system that transforms spoken Bangla into meaningful written text, aiming to enhance voice recognition and support the advancement of Bangla-focused natural language processing applications.",
-        tech: "Deep Learning, NLP",
+        title:
+            "Automated Bangla Speech to Text",
+        description:
+            "A deep learning and NLP based system that converts Bangla speech into text automatically.",
+        tech:
+            "Deep Learning, NLP",
         image: "assets/bangla.png",
-        alt: "Automated Bangla Speech to Text",
-
-        live: "https://example.com",
-        github: "https://github.com/"
+        live: "#",
+        github: "#"
     }
 
 ];
 
 
-/* ==================================================
-   CURRENT PROJECT
-================================================== */
-
-let projectIndex = 0;
+let currentProject = 0;
 
 
-/* ==================================================
-   HTML ELEMENTS
-================================================== */
+const projectNumber =
+    document.getElementById("project-number");
 
-const projectNumber = document.getElementById("project-number");
-const projectTitle = document.getElementById("project-title");
-const projectDescription = document.getElementById("project-description");
-const projectTech = document.getElementById("project-tech");
-const projectImage = document.getElementById("project-image");
+const projectTitle =
+    document.getElementById("project-title");
 
-const projectLive = document.getElementById("project-live");
-const projectGithub = document.getElementById("project-github");
+const projectDescription =
+    document.getElementById("project-description");
 
-const projectPrev = document.getElementById("project-prev");
-const projectNext = document.getElementById("project-next");
+const projectTech =
+    document.getElementById("project-tech");
 
+const projectImage =
+    document.getElementById("project-image");
 
-/* ==================================================
-   SHOW PROJECT
-================================================== */
+const projectLive =
+    document.getElementById("project-live");
+
+const projectGithub =
+    document.getElementById("project-github");
+
+const projectPrev =
+    document.getElementById("project-prev");
+
+const projectNext =
+    document.getElementById("project-next");
+
 
 function showProject(index) {
 
-    projectIndex = (index + projects.length) % projects.length;
+    const project =
+        projects[index];
 
-    const project = projects[projectIndex];
+    if (projectNumber) {
 
+        projectNumber.textContent =
+            project.number;
 
-    /* Project information */
-
-    projectNumber.textContent = project.number;
-
-    projectTitle.textContent = project.title;
-
-    projectDescription.textContent = project.description;
-
-    projectTech.textContent = project.tech;
-
-    projectImage.src = project.image;
-
-    projectImage.alt = project.alt;
+    }
 
 
-    /* ==================================================
-       UPDATE LIVE PROJECT LINK
-    ================================================== */
+    if (projectTitle) {
 
-    projectLive.href = project.live;
+        projectTitle.textContent =
+            project.title;
+
+    }
 
 
-    /* ==================================================
-       UPDATE GITHUB LINK
-    ================================================== */
+    if (projectDescription) {
 
-    projectGithub.href = project.github;
+        projectDescription.textContent =
+            project.description;
+
+    }
+
+
+    if (projectTech) {
+
+        projectTech.textContent =
+            project.tech;
+
+    }
+
+
+    if (projectImage) {
+
+        projectImage.src =
+            project.image;
+
+        projectImage.alt =
+            project.title;
+
+    }
+
+
+    if (projectLive) {
+
+        projectLive.href =
+            project.live;
+
+    }
+
+
+    if (projectGithub) {
+
+        projectGithub.href =
+            project.github;
+
+    }
 
 }
 
 
-/* ==================================================
-   PREVIOUS BUTTON
-================================================== */
+projectPrev.addEventListener(
+    "click",
+    () => {
 
-projectPrev.addEventListener("click", function () {
+        currentProject--;
 
-    showProject(projectIndex - 1);
+        if (currentProject < 0) {
 
-});
+            currentProject =
+                projects.length - 1;
 
+        }
 
-/* ==================================================
-   NEXT BUTTON
-================================================== */
+        showProject(currentProject);
 
-projectNext.addEventListener("click", function () {
-
-    showProject(projectIndex + 1);
-
-});
+    }
+);
 
 
-/* ==================================================
-   LOAD FIRST PROJECT
-================================================== */
+projectNext.addEventListener(
+    "click",
+    () => {
+
+        currentProject++;
+
+        if (
+            currentProject >=
+            projects.length
+        ) {
+
+            currentProject = 0;
+
+        }
+
+        showProject(currentProject);
+
+    }
+);
+
 
 showProject(0);
 
 
-
-
-
-
-
-
-
-
-
-
-
 /* ==================================================
-   ===== SIMPLE EMAILJS CONTACT FORM =====
+   ===== EMAILJS CONTACT FORM + AUTO REPLY =====
 ================================================== */
 
 emailjs.init({
-    publicKey: "suyjrkT1LHt_1Nfz3"
+
+    publicKey:
+        "suyjrkT1LHt_1Nfz3"
+
 });
 
 
 const contactForm =
-    document.getElementById("contact-form");
+    document.getElementById(
+        "contact-form"
+    );
+
 
 const successPopup =
-    document.getElementById("success-popup");
+    document.getElementById(
+        "success-popup"
+    );
+
 
 const popupClose =
-    document.getElementById("popup-close");
+    document.getElementById(
+        "popup-close"
+    );
+
+
+/* ==================================================
+   EMAILJS IDs
+================================================== */
+
+const SERVICE_ID =
+    "service_jj618nw";
+
+
+/* Your existing Contact/Admin template */
+
+const CONTACT_TEMPLATE_ID =
+    "template_jjmotqg";
+
+
+/* Your NEW Auto Reply template */
+
+const AUTOREPLY_TEMPLATE_ID =
+    "template_4aptzwj";
 
 
 /* ==================================================
    CONTACT FORM SUBMIT
 ================================================== */
 
-contactForm.addEventListener(
-    "submit",
-    async function (event) {
+if (contactForm) {
 
-        event.preventDefault();
+    contactForm.addEventListener(
+        "submit",
+        async function (event) {
 
-
-        const button =
-            contactForm.querySelector(".btn");
-
-        const originalText =
-            button.textContent;
+            event.preventDefault();
 
 
-        /* Disable button */
-
-        button.disabled = true;
-
-        button.textContent = "Sending...";
-
-
-        try {
-
-            /* ==========================================
-               SEND MESSAGE THROUGH EMAILJS
-            ========================================== */
-
-            await emailjs.sendForm(
-                "service_jj618nw",
-                "template_jjmotqg",
-                contactForm
-            );
+            const button =
+                contactForm.querySelector(
+                    ".btn"
+                );
 
 
-            /* ==========================================
-               SUCCESS
-            ========================================== */
-
-            contactForm.reset();
-
-            successPopup.classList.add("active");
+            const originalText =
+                button.textContent;
 
 
-        } catch (error) {
+            /* Disable button */
 
-            console.error(
-                "EmailJS Error:",
-                error
-            );
-
-        } finally {
-
-            button.disabled = false;
+            button.disabled = true;
 
             button.textContent =
-                originalText;
+                "Sending...";
+
+
+            try {
+
+                /* ======================================
+                   1. SEND MESSAGE TO ADMIN
+                ====================================== */
+
+                await emailjs.sendForm(
+
+                    SERVICE_ID,
+
+                    CONTACT_TEMPLATE_ID,
+
+                    contactForm
+
+                );
+
+
+                /* ======================================
+                   2. SEND AUTO REPLY TO VISITOR
+                ====================================== */
+
+                await emailjs.sendForm(
+
+                    SERVICE_ID,
+
+                    AUTOREPLY_TEMPLATE_ID,
+
+                    contactForm
+
+                );
+
+
+                /* ======================================
+                   SUCCESS
+                ====================================== */
+
+                contactForm.reset();
+
+
+                if (successPopup) {
+
+                    successPopup.classList.add(
+                        "active"
+                    );
+
+                }
+
+
+            } catch (error) {
+
+                console.error(
+                    "EmailJS Error:",
+                    error
+                );
+
+
+                alert(
+                    "Message could not be sent. Please try again."
+                );
+
+
+            } finally {
+
+                button.disabled =
+                    false;
+
+
+                button.textContent =
+                    originalText;
+
+            }
 
         }
+    );
 
-    }
-);
-
-
-/* ==================================================
-   CLOSE SUCCESS POPUP
-================================================== */
-
-popupClose.addEventListener(
-    "click",
-    function () {
-
-        successPopup.classList.remove("active");
-
-    }
-);
-
-
-/* ==================================================
-   CLOSE SUCCESS POPUP OUTSIDE
-================================================== */
-
-successPopup.addEventListener(
-    "click",
-    function (event) {
-
-        if (
-            event.target === successPopup
-        ) {
-
-            successPopup.classList.remove("active");
-
-        }
-
-    }
-);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ==================================================
-   PROFILE IMAGE AUTO FLIP WHEN HOME IS OPENED
-================================================== */
-
-const profileCard = document.querySelector(".profile-card");
-
-function homeFlip() {
-    if (!profileCard) return;
-
-    // Start from normal position
-    profileCard.classList.remove("flipped");
-
-    // Flip
-    setTimeout(() => {
-        profileCard.classList.add("flipped");
-
-        // Back to normal after 2 seconds
-        setTimeout(() => {
-            profileCard.classList.remove("flipped");
-        }, 2000);
-
-    }, 50);
 }
 
-// Run when page is refreshed
-window.addEventListener("load", () => {
-    if (location.hash === "#home" || location.hash === "") {
-        homeFlip();
+
+/* ==================================================
+   ===== CLOSE SUCCESS POPUP =====
+================================================== */
+
+if (popupClose) {
+
+    popupClose.addEventListener(
+        "click",
+        function () {
+
+            successPopup.classList.remove(
+                "active"
+            );
+
+        }
+    );
+
+}
+
+
+/* ==================================================
+   ===== CLOSE POPUP OUTSIDE =====
+================================================== */
+
+if (successPopup) {
+
+    successPopup.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                event.target ===
+                successPopup
+            ) {
+
+                successPopup.classList.remove(
+                    "active"
+                );
+
+            }
+
+        }
+    );
+
+}
+
+
+
+
+/* ==================================================
+   ===== PROFILE IMAGE AUTO FLIP =====
+================================================== */
+
+const profileCard =
+    document.querySelector(
+        ".profile-card"
+    );
+
+
+function homeFlip() {
+
+    if (!profileCard) return;
+
+
+    profileCard.classList.remove(
+        "flipped"
+    );
+
+
+    setTimeout(() => {
+
+        profileCard.classList.add(
+            "flipped"
+        );
+
+
+        setTimeout(() => {
+
+            profileCard.classList.remove(
+                "flipped"
+            );
+
+        }, 2000);
+
+
+    }, 50);
+
+}
+
+
+window.addEventListener(
+    "load",
+    () => {
+
+        if (
+            location.hash === "#home" ||
+            location.hash === ""
+        ) {
+
+            homeFlip();
+
+        }
+
     }
-});
+);
 
-// Run whenever user goes to Home
-window.addEventListener("hashchange", () => {
-    if (location.hash === "#home") {
-        homeFlip();
+
+window.addEventListener(
+    "hashchange",
+    () => {
+
+        if (
+            location.hash === "#home"
+        ) {
+
+            homeFlip();
+
+        }
+
     }
-});
-
-// Manual click on profile card
-profileCard?.addEventListener("click", () => {
-    profileCard.classList.toggle("flipped");
-});
+);
 
 
+profileCard?.addEventListener(
+    "click",
+    () => {
 
+        profileCard.classList.toggle(
+            "flipped"
+        );
 
-
-
-
-
-
+    }
+);
 
 
 
 
 
+/* ==================================================
+   ===== ACHIEVEMENT CARD IMAGE HOVER =====
+================================================== */
+
+const experienceCards =
+    document.querySelectorAll(
+        ".experience-card"
+    );
 
 
+experienceCards.forEach(card => {
+
+    const originalContent =
+        card.innerHTML;
 
 
+    card.addEventListener(
+        "mouseenter",
+        () => {
+
+            const image =
+                card.dataset.image;
 
 
+            if (!image) return;
 
 
- 
-// ==================================================
-// EXPERIENCE CARD IMAGE ON HOVER
-// ==================================================
+            card.innerHTML = `
 
-const experienceCards = document.querySelectorAll(".experience-card");
+                <img
+                    src="${image}"
+                    alt="Achievement"
+                    style="
+                        width:100%;
+                        height:100%;
+                        object-fit:contain;
+                        border-radius:inherit;
+                    "
+                >
 
-experienceCards.forEach((card) => {
+            `;
 
-    // Save original content
-    const originalContent = card.innerHTML;
+        }
+    );
 
-    card.addEventListener("mouseenter", function () {
 
-        // Don't change if already showing image
-        if (this.classList.contains("show-image")) return;
+    card.addEventListener(
+        "mouseleave",
+        () => {
 
-        const imagePath = this.dataset.image;
+            card.innerHTML =
+                originalContent;
 
-        // Create image
-        const image = document.createElement("img");
-        image.src = imagePath;
-        image.alt = "Achievement Certificate";
-        image.classList.add("achievement-image");
-
-        // Clear card and show image
-        this.innerHTML = "";
-        this.appendChild(image);
-
-        this.classList.add("show-image");
-    });
-
-    card.addEventListener("mouseleave", function () {
-
-        // Restore original card
-        this.innerHTML = originalContent;
-        this.classList.remove("show-image");
-    });
+        }
+    );
 
 });
